@@ -1,0 +1,32 @@
+{
+  "name": "redux-form-demo",
+  "version": "1.0.0",
+  "description": "redux form demo",
+  "main": "index.js",
+  "dependencies": {
+    "react": "^15.3.1",
+    "react-dom": "^15.3.1",
+    "react-redux": "^5.0.6",
+    "react-router": "^2.8.1",
+    "redux": "^3.7.2",
+    "redux-form": "^7.1.2",
+    "redux-form-website-template": "0.0.41",
+    "webpack": "^2.2.1",
+    "webpack-dev-server": "^2.9.4"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "html-webpack-plugin": "^2.30.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "webpack --config webpack.config.js",
+    "server": "webpack-dev-server --open",
+    "webpack": "webpack --progress --colors --watch"
+  },
+  "author": "SKYE",
+  "license": "ISC"
+}
