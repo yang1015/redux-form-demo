@@ -25,17 +25,30 @@ module.exports={
                 loader: 'babel-loader',
                 exclude: /node_modules/,
                 query: {
-                    presets: ['es2015', 'react'],                                                
+                    presets: ['es2015', 'react'],
+                    compact: false,
+                    plugins: [
+                        [
+                            "import",
+                            {
+                                "libraryName": "antd-mobile",
+                                "style": "css"
+                            }
+                        ] // `style: true` 会加载 less 文件
+                    ]
                 }
             },
 
         ]
     },
+
+
     devServer: {
         contentBase: "./web",//本地服务器所加载的页面所在的目录
         historyApiFallback: true,//不跳转
         inline: true//实时刷新
     },
+
     plugins:[
         new HtmlWebpackPlugin({  //根据模板插入css/js等生成最终HTML
             //filename配置的html文件目录是相对于webpackConfig.output.path路径而言的，不是相对于当前项目目录结构的。
