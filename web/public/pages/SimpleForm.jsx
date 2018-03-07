@@ -1,9 +1,18 @@
 import React, {Component} from 'react';
 import {Field, FieldArray, reduxForm} from 'redux-form';
 import {Button} from 'antd-mobile';
-import {List, InputItem, DatePicker, Checkbox} from 'antd-mobile';
+import {List, InputItem, DatePicker, Checkbox, TextareaItem} from 'antd-mobile';
+import enUs from 'antd-mobile/lib/date-picker/locale/en_US';
 // import formValues 可以读取当前表单的 value。当表单子组件的 onChange 依赖于当前表单里的值，很有用。
 
+/*
+* text input ✔️√
+* radio ✔️√
+* checkbox
+* date
+* textarea √
+* multiple select
+* */
 const CheckboxItem = Checkbox.CheckboxItem;
 
 const renderField = ({input, label, type, disabled, meta: {touched, error, warning}}) => (
@@ -18,12 +27,16 @@ const renderField = ({input, label, type, disabled, meta: {touched, error, warni
     </div>
 );
 
+
 const required = value => (value ? undefined : 'required');
 
 
 class SimpleForm extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+            sex: 1
+        }
     }
 
     submitFunc(values) {
@@ -42,71 +55,68 @@ class SimpleForm extends React.Component {
                 <Field name="firstName"
                        component={NormalInputComponent}
                        label="First Name"
-                       type="text" placeholder="first name" validate={[required]}
+                       type="text"
+                       validate={[required]}
                 />
 
                 <Field name="lastName"
                        component={NormalInputComponent}
                        label="Last Name"
-                       type="text" placeholder="last name" validate={[required]}
+                       type="text"
+                       validate={[required]}
                 />
 
                 <Field name="email"
                        component={NormalInputComponent}
                        label="Email"
-                       type="email" placeholder="email" validate={[required]}
+                       type="email"
+                       validate={[required]}
                 />
 
 
-                {/*<div className="input_style">*/}
-                {/*<label>Email</label>*/}
-                {/*<div>*/}
-                {/*<Field name="email" component="input" type="email" placeholder="Email"/>*/}
-                {/*</div>*/}
-                {/*</div>*/}
+                <Field name="birthday" type="date" component={DatePickerComponent} label="Birthday"/>
 
-
-                {/*<div className="input_style">*/}
-                {/*<label>date</label>*/}
-                {/*<div>*/}
-                {/*<Field name="date" component="input" type="date" placeholder="date"/>*/}
-                {/*</div>*/}
-                {/*</div>*/}
-
-
-                <div>
-                    <label>Birthday</label>
-                    <Field name = "birthday" component = {DatePickerComponent} />
-                </div>
-
-
-                <div className="input_style">
+                <div className="form_line_style text_size_normal"
+                     style={{
+                         display: "flex",
+                         alignItems: "baseline",
+                         justifyContent: "space-between"
+                     }}>
                     <label>Sex</label>
-                    <div>
-                        <label>
-                            <Field name="sex" component="input" type="radio" value="male"/>
-                            {' '}
-                            Male
-                        </label>
-                        <label>
-                            <Field name="sex" component="input" type="radio" value="female"/>
-                            {' '}
-                            Female
-                        </label>
+                    <div className="customizedRadio">
+
+                        <Field
+                            name="sex"
+                            component="input"
+                            type="radio"
+                            value="male"
+                            id="male"
+                        />{' '}
+                        <label htmlFor="male"> Male</label>
+
+                        <Field
+                            name="sex"
+                            component="input"
+                            type="radio"
+                            value="female"
+                            id="female"
+                        />{' '}
+                        <label htmlFor="female"> Female</label>
                     </div>
                 </div>
 
 
-                <div>
-                    <label>Favorite Color</label>
-                    <div>
-                        <FieldArray name="favoriteColor" component={CheckboxComponent} optionsArray = {["red", "yellow", "green"]}/>
-                    </div>
+                <div className="text_size_normal">
+                    <label style={{paddingLeft: "15px"}}>Favorite Color</label>
+
+                    <FieldArray name="favoriteColor"
+                                component={CheckboxComponent}
+                                optionsArray={["red", "yellow", "green"]}/>
+
                 </div>
 
 
-
-                <div className="input_style">
+                <div className="text_size_normal" style={{paddingLeft: "15px"}}>
                     <label htmlFor="employed">Employed</label>
                     <div>
                         <Field
@@ -117,19 +127,23 @@ class SimpleForm extends React.Component {
                         />
                     </div>
                 </div>
-                <div className="input_style">
-                    <label>Notes</label>
+
+                <div className="text_size_normal">
+                    <label style={{paddingLeft: "15px"}}>Notes</label>
                     <div>
-                        <Field name="notes" component="textarea"/>
+                        <Field name="notes" component={TextareaComponent}/>
                     </div>
                 </div>
+
                 <div>
                     {/*cannot use <Button> directly, need add style instead of using antd component*/}
-                    <button type="submit">Submit</button>
+                    <button type="submit" disabled={submitting}>Submit</button>
                     {/*<Button type="button" disabled={pristine || submitting} onClick={reset}>*/}
                     {/*Clear Values*/}
                     {/*</Button>*/}
                 </div>
+
+                {/*<Button type="primary">888</Button>*/}
 
             </form>
         );
@@ -169,8 +183,7 @@ class NormalInputComponent extends React.Component {
     render() {
         return (
             <List>
-                <InputItem placeholder="auto focus"
-                           onChange={(e) => this.handleNormalInputComponentChange(e)}>
+                <InputItem placeholder={this.props.label} onChange={(e) => this.handleNormalInputComponentChange(e)}>
                     {this.props.label}
                 </InputItem>
             </List>
@@ -179,20 +192,30 @@ class NormalInputComponent extends React.Component {
 }
 
 class DatePickerComponent extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+
     handleDatePickerComponentChange(e) {
         if (this.props.input.onChange) {
             this.props.input.onChange(e);
         }
     }
+
     render() {
         return (
             <DatePicker
                 mode="date"
-                title="Select Date"
-                extra="Optional"
-                style={{width: "200px"}}
-                onChange = {(e) => this.handleDatePickerComponentChange(e)}
-            />
+                title={"Select" + this.props.label}
+                extra="please select"
+                onChange={(e) => this.handleDatePickerComponentChange(e)}
+            >
+                {/*没有list item会不显示的*/}
+                <List.Item arrow="horizontal">
+                    {this.props.label}
+                </List.Item>
+
+            </DatePicker>
         )
     }
 }
@@ -201,18 +224,20 @@ class CheckboxComponent extends React.Component {
     constructor(props) {
         super(props);
     }
+
     onChange(value) {
         alert("!");
-        console.log(value)
+        // console.log(value)
         //this.props.input.onChange(e);
     }
+
     render() {
         return (
             <List>
                 {
-                    this.props.optionsArray.map(function(each, index) {
+                    this.props.optionsArray.map(function (each, index) {
                         return (
-                            <CheckboxItem key = {each} onChange={() => this.onChange(each)}>
+                            <CheckboxItem key={each} onChange={() => this.onChange(each)}>
                                 {each}
                             </CheckboxItem>
                         )
@@ -222,4 +247,28 @@ class CheckboxComponent extends React.Component {
         )
     }
 }
+
+
+class TextareaComponent extends React.Component {
+
+    handleChange(e) {
+        if (this.props.input.onChange) {
+            this.props.input.onChange(e);
+        }
+    }
+
+    render() {
+        return (
+            <List>
+                <TextareaItem
+                    autoHeight
+                    labelNumber={5}
+                    className="textarea_style"
+                    onChange={(e) => this.handleChange(e)}
+                />
+            </List>
+        )
+    }
+}
+
 

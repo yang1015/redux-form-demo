@@ -16,7 +16,7 @@ const rootEl = document.getElementById("root");
 ReactDOM.render(
   <Provider store={store}>
     <div style={{ padding: 15 }}>
-      <h2>Simple Form</h2>
+      <h2 style = {{paddingLeft:"15px"}}>Simple Form</h2>
       <Home />
       
       {/* <SimpleForm /> */}
