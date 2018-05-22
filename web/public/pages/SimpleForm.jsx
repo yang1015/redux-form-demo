@@ -138,6 +138,7 @@ class SimpleForm extends React.Component {
                 <div>
                     {/*cannot use <Button> directly, need add style instead of using antd component*/}
                     <button type="submit" disabled={submitting}>Submit</button>
+                    <Button type = "primary">aaa</Button>
                     {/*<Button type="button" disabled={pristine || submitting} onClick={reset}>*/}
                     {/*Clear Values*/}
                     {/*</Button>*/}

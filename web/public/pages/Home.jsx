@@ -1,5 +1,6 @@
 import React from 'react';
 import SimpleForm from "./SimpleForm.jsx";
+import { Button } from 'antd-mobile';
 import ShowResults from "./ShowResults.jsx"
 
 // import { Values } from "redux-form-website-template";
@@ -14,7 +15,6 @@ class Home extends React.Component {
         return (
             <div>
                 <SimpleForm onSubmit={this.handleResults}/>
-
             </div>
         )
     }

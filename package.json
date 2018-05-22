@@ -4,7 +4,7 @@
   "description": "redux form demo",
   "main": "index.js",
   "dependencies": {
-    "antd-mobile": "^2.1.6",
+    "antd-mobile": "^2.1.9",
     "babel-plugin-import": "^1.6.2",
     "css-loader": "^0.28.7",
     "react": "^15.6.2",
