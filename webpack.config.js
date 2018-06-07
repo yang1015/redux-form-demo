@@ -6,7 +6,8 @@ module.exports={
     entry: __dirname + "/web/public/entry.jsx",
     output: {
         path: __dirname +  "/web/dist", //发布地址 path.resolve方法用于将相对路径转为绝对路径。
-        filename: "index.js"
+        filename: "index.js",
+        publicPath: "./"
     },
     devtool: 'eval-source-map',
     module:{
